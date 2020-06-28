@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Admin\AppData\Local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Admin\AppData\Local\JetBrains\Rider2020.1\resharper-host\Local\Transient\ReSharperHost\v201\SolutionCaches\_demoqa-com.-1606359896.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Admin\AppData\Roaming\JetBrains\Rider2020.1\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\Admin\RiderProjects\demoqa-com" t="IncludeFlat">
+      <e p="demoqa-com" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="demoqa-com.csproj" t="IncludeRecursive" />
+        <e p="ElementPageTest.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="pages" t="Include">
+          <e p="BasePage.cs" t="Include" />
+          <e p="ElementsPage.cs" t="Include" />
+        </e>
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="demoqa-com.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive">
+        <e p="NUnit3TestAdapter.3.16.1\build\net35\nunit.engine.api.dll" t="Include" />
+        <e p="NUnit3TestAdapter.3.16.1\build\net35\nunit.engine.dll" t="Include" />
+        <e p="NUnit3TestAdapter.3.16.1\build\net35\NUnit3.TestAdapter.dll" t="Include" />
+        <e p="NUnit3TestAdapter.3.16.1\build\net35\NUnit3.TestAdapter.pdb" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>
