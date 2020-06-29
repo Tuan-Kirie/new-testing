@@ -43,7 +43,7 @@ namespace demoqa_com.pages
         private const string webTablesFormSendBtn = "#submit";
         private const string webTablesUserForm = "#userForm";
         private const string webTablesUserFormInputs = "#userForm input";
-        private const string webTablesRow = ".rt-tr[role=row]";
+        private const string webTablesRow = ".rt-tr[role=row].-odd";
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -160,6 +160,26 @@ namespace demoqa_com.pages
             }
 
             IWebElement sbm_btn = this.driver.FindElement(By.CssSelector(webTablesFormSendBtn));
+        }
+
+        public Boolean check_new_raw_exist(string[] data)
+        {
+            List<IWebElement> rows = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesRow)));
+            IWebElement last_row = rows[rows.Count - 1];
+            List<IWebElement> last_row_content_els = new List<IWebElement>(last_row.FindElements(By.CssSelector("div")));
+            last_row_content_els.RemoveAt(last_row_content_els.Count - 1);
+            for (int i = 0; i < last_row_content_els.Count; i++)
+            {
+                if (data[i] == last_row_content_els[i].Text)
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

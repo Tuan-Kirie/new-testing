@@ -68,7 +68,7 @@ namespace demoqa_com.pages
         }
 
         [Test, Sequential]
-        public void test_guest_can_select_yes_radio(
+        public void test_guest_can_select_radio(
             [Values("Yes", "Impressive", "No")] string radio_type,
             [Values(true, true, false)] Boolean expected_result
             )
@@ -95,7 +95,9 @@ namespace demoqa_com.pages
             ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
             page.open_page();
             page.add_new_table_row(data);
-            
+            Boolean check_status = page.check_new_raw_exist(data);
+            Assert.AreEqual(true, check_status);
+
         }
         
         [TearDown]
