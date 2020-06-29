@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
@@ -11,6 +13,8 @@ namespace demoqa_com.pages
         //ElementsPage locators
         private const string textBoxPageBtn = "//span[text()='Text Box']//ancestor::li";
         private const string radioBtnPageBtn = "//span[text()='Radio Button']//ancestor::li";
+        private const string webTablesPageBtn = "//span[text()='Web Tables']//ancestor::li";
+        
         // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
@@ -25,6 +29,21 @@ namespace demoqa_com.pages
         private const string radioBtnNoRadio = "#noRadio";
         private const string radioBtnOutput = ".text-success";
         
+        //WebTablesPage Locators
+        private const string webTablesTable = ".rt-table";
+        private const string webTablesAddNewBtn = "#addNewRecordButton";
+        private const string webTablesEditBtn = ".action-buttons > span[title=\"Edit\"]";
+        private const string webTablesRemoveBtn = ".action-buttons > span[title=\"Delete\"]";
+        private const string webTablesFormFirstNameInput = "#firstName";
+        private const string webTablesFormLastNameInput = "#lastName";
+        private const string webTablesFormEmailInput = "#userEmail";
+        private const string webTablesFormAgeInput = "#age";
+        private const string webTablesFormSalaryInput = "salary";
+        private const string webTablesFormDepartmentInput = "#department";
+        private const string webTablesFormSendBtn = "#submit";
+        private const string webTablesUserForm = "#userForm";
+        private const string webTablesUserFormInputs = "#userForm input";
+        private const string webTablesRow = ".rt-tr[role=row]";
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -123,7 +142,24 @@ namespace demoqa_com.pages
             }
             return false;
         }
-        
-        
+
+        public void open_web_tables()
+        {
+            IWebElement elem = this.driver.FindElement(By.XPath(webTablesPageBtn));
+            elem.Click();
+        }
+
+        public void add_new_table_row(string[] data)
+        {
+            IWebElement add_btn = this.driver.FindElement(By.CssSelector(webTablesAddNewBtn));
+            List<IWebElement> form_inputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesUserFormInputs)));
+            add_btn.Click();
+            for (int i = 0; i < form_inputs.Count; i++)
+            {
+                form_inputs[i].SendKeys(data[i]);
+            }
+
+            IWebElement sbm_btn = this.driver.FindElement(By.CssSelector(webTablesFormSendBtn));
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace demoqa_com.pages
         private string elements_page_url = "https://demoqa.com/elements";
         private string text_box_url = "https://demoqa.com/text-box";
         private string radio_btn_url = "https://demoqa.com/radio-button";
-        
+        private string web_tables_btn_url = "https://demoqa.com/webtables";
         
         [SetUp]
         public void initChromeDriver()
@@ -78,8 +78,25 @@ namespace demoqa_com.pages
             page.click_radio(radio_type);
             Boolean res = page.check_radio_select_res(radio_type);
             Assert.AreEqual(expected_result, res, "Error with radio btn selection");
-        }    
-        
+        }
+
+        [Test]
+        public void test_guest_can_go_to_web_tables_page()
+        {
+            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            page.open_page();
+            page.open_web_tables();
+            Assert.AreEqual(web_tables_btn_url, page.driver.Url, "Not correct page");
+        }
+
+        [TestCase(new object[] {new string[] {"FirstName", "LastName", "11", "testmail@gmail.com", "12222", "Legal"}})]
+        public void test_guest_can_add_new_row(string[] data)
+        {
+            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            page.open_page();
+            page.add_new_table_row(data);
+            
+        }
         
         [TearDown]
         public void close_driver()
