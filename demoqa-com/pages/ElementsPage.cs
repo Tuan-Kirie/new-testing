@@ -8,13 +8,20 @@ namespace demoqa_com.pages
 {
     public class ElementsPage : BasePage
     {
+        //ElementsPage locators
         private const string textBoxPageBtn = "//span[text()='Text Box']//ancestor::li";
+        private const string radioBtnPageBtn = "//span[text()='Radio Button']//ancestor::li";
+        // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
         private const string textBoxResult = "#output";
         private const string textBoxResultFullname = "#output #name";
         private const string textBoxEmailInp = "#userEmail";
         private const string textBoxResultEmail = "#output #email";
+       
+        //RadioBtnPage Locators
+        private const string 
+        
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -64,6 +71,13 @@ namespace demoqa_com.pages
             {
                 return false;
             }
+        }
+
+        public void open_radio_btn()
+        {
+            IWebElement elem = this.driver.FindElement(By.XPath(radioBtnPageBtn));
+            elem.Click();
+            
         }
     }
 }

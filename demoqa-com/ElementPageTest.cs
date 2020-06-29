@@ -55,6 +55,18 @@ namespace demoqa_com.pages
             bool email_res = page.check_email_send_res(email);
             Assert.AreEqual(expected_result, email_res, "Input email are not equal");
         }
+
+        [Test]
+        public void test_guest_can_go_to_radio_btn_page()
+        {
+            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            page.open_page();
+            page.open_radio_btn();
+            Assert.AreEqual("https://demoqa.com/radio-button", this.driver.Url, "Not Right Url");
+        }
+        
+        
+        
         
         [TearDown]
         public void close_driver()
