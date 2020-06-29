@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
 
@@ -10,8 +11,10 @@ namespace demoqa_com.pages
         private const string textBoxPageBtn = "//span[text()='Text Box']//ancestor::li";
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
-        private const string textBoxoResult = "#output";
+        private const string textBoxResult = "#output";
         private const string textBoxResultFullname = "#output #name";
+        private const string textBoxEmailInp = "#userEmail";
+        private const string textBoxResultEmail = "#output #email";
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -40,8 +43,27 @@ namespace demoqa_com.pages
 
         public IWebElement get_form_send_result()
         {
-            return this.driver.FindElement(By.CssSelector(textBoxoResult));
+            return this.driver.FindElement(By.CssSelector(textBoxResult));
         }
 
+        public void input_data_to_email(string data)
+        {
+            IWebElement elem = this.driver.FindElement(By.CssSelector(textBoxEmailInp));
+            elem.SendKeys(data);
+        }
+
+        public Boolean check_email_send_res(string email)
+        {
+            if (check_element_on_DOM(textBoxResultEmail) != null)
+            {
+                IWebElement res_email = this.driver.FindElement(By.CssSelector(textBoxResultEmail));
+                string result = res_email.Text.Substring(6);
+                return email == result;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

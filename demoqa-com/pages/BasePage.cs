@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
+using OpenQA.Selenium.Support.UI;
 
 namespace demoqa_com.pages
 {
@@ -26,6 +27,20 @@ namespace demoqa_com.pages
             string js_script;
             js_script = String.Format("document.getElementById(\"{0}\").scrollIntoView();", elem_id);
             this.driver.ExecuteJavaScript(js_script);
+        }
+
+        public IWebElement check_element_on_DOM(string locator)
+        {
+            WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, this.timeout));
+            try
+            {
+                IWebElement elem = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(locator)));
+                return elem;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return null;
+            }
         }
     }
 }
