@@ -20,7 +20,10 @@ namespace demoqa_com.pages
         private const string textBoxResultEmail = "#output #email";
        
         //RadioBtnPage Locators
-        private const string 
+        private const string radioBtnYesRadio = "#yesRadio";
+        private const string radioBtnImpressiveRadio = "#impressiveRadio";
+        private const string radioBtnNoRadio = "#noRadio";
+        private const string radioBtnOutput = ".text-success";
         
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
@@ -77,7 +80,46 @@ namespace demoqa_com.pages
         {
             IWebElement elem = this.driver.FindElement(By.XPath(radioBtnPageBtn));
             elem.Click();
-            
         }
+
+        public void click_radio(string radio_type)
+        {
+            if (radio_type == "Yes")
+            {
+                IWebElement elem = check_element_is_clickable(radioBtnYesRadio);
+                elem.Click();
+            } else if (radio_type == "Impressive")
+            {
+                IWebElement elem = check_element_is_clickable(radioBtnImpressiveRadio);
+                elem.Click();
+            }
+            else
+            {
+                IWebElement elem = check_element_is_clickable(radioBtnNoRadio);
+                elem.Click();
+            }
+        }
+
+        private Boolean check_radio_output(string selected_radio)
+        {
+            IWebElement elem = this.driver.FindElement(By.CssSelector(radioBtnOutput));
+            return selected_radio == elem.Text;
+        }
+        
+        public Boolean check_radio_select_res(string radio_btn_type)
+        {
+            switch (radio_btn_type)
+            {
+                case "Yes":
+                    return check_radio_output("Yes"); 
+                case "Impressive":
+                    return check_radio_output("Impressive");
+                case "No":
+                    return check_radio_output("No");
+            }
+            return false;
+        }
+        
+        
     }
 }

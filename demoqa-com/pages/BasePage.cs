@@ -42,5 +42,19 @@ namespace demoqa_com.pages
                 return null;
             }
         }
+
+        public IWebElement check_element_is_clickable(string locator)
+        {
+            WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, this.timeout));
+            try
+            {
+                IWebElement elem = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locator)));
+                return elem;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return null;
+            }
+        }
     }
 }

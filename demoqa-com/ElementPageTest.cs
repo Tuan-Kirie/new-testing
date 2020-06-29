@@ -11,6 +11,8 @@ namespace demoqa_com.pages
         public IWebDriver driver = null;
         private string elements_page_url = "https://demoqa.com/elements";
         private string text_box_url = "https://demoqa.com/text-box";
+        private string radio_btn_url = "https://demoqa.com/radio-button";
+        
         
         [SetUp]
         public void initChromeDriver()
@@ -64,8 +66,19 @@ namespace demoqa_com.pages
             page.open_radio_btn();
             Assert.AreEqual("https://demoqa.com/radio-button", this.driver.Url, "Not Right Url");
         }
-        
-        
+
+        [Test, Sequential]
+        public void test_guest_can_select_yes_radio(
+            [Values("Yes", "Impressive", "No")] string radio_type,
+            [Values(true, true, false)] Boolean expected_result
+            )
+        {
+            ElementsPage page = new ElementsPage(driver, radio_btn_url);
+            page.open_page();
+            page.click_radio(radio_type);
+            Boolean res = page.check_radio_select_res(radio_type);
+            Assert.AreEqual(expected_result, res, "Error with radio btn selection");
+        }    
         
         
         [TearDown]
