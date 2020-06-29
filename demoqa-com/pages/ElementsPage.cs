@@ -86,24 +86,28 @@ namespace demoqa_com.pages
         {
             if (radio_type == "Yes")
             {
-                IWebElement elem = check_element_is_clickable(radioBtnYesRadio);
-                elem.Click();
+                click_to_element_with_js(radioBtnYesRadio);
             } else if (radio_type == "Impressive")
             {
-                IWebElement elem = check_element_is_clickable(radioBtnImpressiveRadio);
-                elem.Click();
+                click_to_element_with_js(radioBtnImpressiveRadio);
             }
             else
             {
-                IWebElement elem = check_element_is_clickable(radioBtnNoRadio);
-                elem.Click();
+                click_to_element_with_js(radioBtnNoRadio);
             }
         }
 
         private Boolean check_radio_output(string selected_radio)
         {
-            IWebElement elem = this.driver.FindElement(By.CssSelector(radioBtnOutput));
-            return selected_radio == elem.Text;
+            try
+            {
+                IWebElement elem = this.driver.FindElement(By.CssSelector(radioBtnOutput));
+                return selected_radio == elem.Text;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
         
         public Boolean check_radio_select_res(string radio_btn_type)

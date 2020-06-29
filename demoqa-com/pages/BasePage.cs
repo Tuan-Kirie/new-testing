@@ -45,16 +45,22 @@ namespace demoqa_com.pages
 
         public IWebElement check_element_is_clickable(string locator)
         {
-            WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, this.timeout));
             try
             {
-                IWebElement elem = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locator)));
+                WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, this.timeout));
+                IWebElement elem = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector(locator)));
                 return elem;
             }
             catch (WebDriverTimeoutException)
             {
                 return null;
             }
+        }
+
+        public void click_to_element_with_js(string locator)
+        {
+            string js = $"document.getElementById(\"{locator.TrimStart('#')}\").click();";
+            this.driver.ExecuteJavaScript(js);
         }
     }
 }
