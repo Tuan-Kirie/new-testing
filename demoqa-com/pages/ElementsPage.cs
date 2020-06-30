@@ -316,5 +316,11 @@ namespace demoqa_com.pages
 
             return false;
         }
+
+        public void uplodown_download_file()
+        {
+            IWebElement elem = this.driver.FindElement(By.CssSelector(uplodownDownloadBtn));
+            elem.Click();
+        }
     }
 }

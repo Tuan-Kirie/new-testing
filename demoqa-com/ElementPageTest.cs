@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -9,6 +10,24 @@ namespace demoqa_com.pages
     public class ElementPageTest
     {
         public IWebDriver driver = null;
+        public ChromeOptions ChromdeDriverOptions
+        {
+            get
+            {    
+                string project_path = Path.GetDirectoryName(Path.GetDirectoryName(
+                    System.IO.Path.GetDirectoryName( 
+                        System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase )));
+                string download_path = (project_path.Replace("\\", Path.DirectorySeparatorChar.ToString()) + "\\Download").Substring(6);
+                ChromeOptions options = new ChromeOptions();
+                options.AddUserProfilePreference("download.default_directory", download_path);
+                options.AddUserProfilePreference("download.prompt_for_download", "false");
+                options.AddUserProfilePreference( "directory_upgrade",true);
+                options.AddUserProfilePreference( "safebrowsing.enabled", true);
+                options.AddUserProfilePreference("safebrowsing_for_trusted_sources_enabled", false);
+                return options;
+            }
+        }
+        
         private string elements_page_url = "https://demoqa.com/elements";
         private string text_box_url = "https://demoqa.com/text-box";
         private string radio_btn_url = "https://demoqa.com/radio-button";
@@ -18,7 +37,8 @@ namespace demoqa_com.pages
         [SetUp]
         public void initChromeDriver()
         {
-            this.driver = new ChromeDriver();
+            this.driver = new ChromeDriver(ChromdeDriverOptions);
+            
         }
         
         [Test]
@@ -169,6 +189,16 @@ namespace demoqa_com.pages
             page.open_page();
             page.upload_test_file("test_file.txt");
             Boolean check_res = page.check_file_upload("test_file.txt");
+            Assert.True(check_res);
+        }
+
+        [Test]
+        public void test_guest_can_download_file()
+        {
+            ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
+            page.open_page();
+            page.uplodown_download_file();
+            Boolean check_res = page.check_file_download("sampleFile.jpeg");
             Assert.True(check_res);
         }
         

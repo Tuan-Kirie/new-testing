@@ -21,6 +21,10 @@ namespace demoqa_com.pages
             get => (project_path.Replace("\\", "/") + "/files/").Substring(6);
         }
 
+        public string DownLoadFilesPath
+        {
+            get => (project_path.Replace("\\", "/") + "/download/").Substring(6);
+        }
         public BasePage(IWebDriver driver, string url, int timeout = 4)
         {
             this.driver = driver;
@@ -85,6 +89,25 @@ namespace demoqa_com.pages
         {
             string js = $"document.getElementById(\"{locator.TrimStart('#')}\").click();";
             this.driver.ExecuteJavaScript(js);
+        }
+
+        public Boolean check_file_download(string file_name, int download_time=3000)
+        {   
+            // Await file download (3 sec auto or manually add)
+            System.Threading.Thread.Sleep(download_time);
+            string download_directory = DownLoadFilesPath;
+            string[] filePaths = Directory.GetFiles(download_directory);
+            foreach (string file in filePaths)
+            {
+                if (file.Contains(file_name))
+                {
+                    FileInfo exis_file = new FileInfo(file);
+                    exis_file.Delete();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
