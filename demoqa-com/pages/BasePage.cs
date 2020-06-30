@@ -57,6 +57,20 @@ namespace demoqa_com.pages
             }
         }
 
+        public Boolean check_element_in_Dom_XPATH(string element_text)
+        {
+            try
+            {
+                string locator = $"//*[text()='{element_text}']";
+                IWebElement elem = this.driver.FindElement(By.XPath(locator));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+        
         public void click_to_element_with_js(string locator)
         {
             string js = $"document.getElementById(\"{locator.TrimStart('#')}\").click();";

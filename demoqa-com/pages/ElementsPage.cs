@@ -152,25 +152,38 @@ namespace demoqa_com.pages
         public void add_new_table_row(string[] data)
         {
             IWebElement add_btn = this.driver.FindElement(By.CssSelector(webTablesAddNewBtn));
-            List<IWebElement> form_inputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesUserFormInputs)));
             add_btn.Click();
+            List<IWebElement> form_inputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesUserFormInputs)));
             for (int i = 0; i < form_inputs.Count; i++)
             {
                 form_inputs[i].SendKeys(data[i]);
             }
 
             IWebElement sbm_btn = this.driver.FindElement(By.CssSelector(webTablesFormSendBtn));
+            sbm_btn.Click();
         }
 
+        public void edit_existing_table(string[] data)
+        {
+            IWebElement edit_btn = this.driver.FindElement(By.CssSelector(webTablesEditBtn));
+            edit_btn.Click();
+            List<IWebElement> form_inputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesUserFormInputs)));
+            for (int i = 0; i < form_inputs.Count; i++)
+            {
+                form_inputs[i].SendKeys(Keys.Control + "a");
+                form_inputs[i].SendKeys(Keys.Delete);
+                form_inputs[i].SendKeys(data[i]);
+            }
+
+            IWebElement sbm_btn = this.driver.FindElement(By.CssSelector(webTablesFormSendBtn));
+            sbm_btn.Click();
+        }
+        
         public Boolean check_new_raw_exist(string[] data)
         {
-            List<IWebElement> rows = new List<IWebElement>(this.driver.FindElements(By.CssSelector(webTablesRow)));
-            IWebElement last_row = rows[rows.Count - 1];
-            List<IWebElement> last_row_content_els = new List<IWebElement>(last_row.FindElements(By.CssSelector("div")));
-            last_row_content_els.RemoveAt(last_row_content_els.Count - 1);
-            for (int i = 0; i < last_row_content_els.Count; i++)
+            for (int i = 0; i < data.Length; i++)
             {
-                if (data[i] == last_row_content_els[i].Text)
+                if (check_element_in_Dom_XPATH(data[i]))
                 {
                     continue;
                 }
@@ -179,6 +192,7 @@ namespace demoqa_com.pages
                     return false;
                 }
             }
+
             return true;
         }
     }

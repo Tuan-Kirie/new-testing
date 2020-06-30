@@ -89,7 +89,7 @@ namespace demoqa_com.pages
             Assert.AreEqual(web_tables_btn_url, page.driver.Url, "Not correct page");
         }
 
-        [TestCase(new object[] {new string[] {"FirstName", "LastName", "11", "testmail@gmail.com", "12222", "Legal"}})]
+        [TestCase(new object[] {new string[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
         public void test_guest_can_add_new_row(string[] data)
         {
             ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
@@ -98,6 +98,16 @@ namespace demoqa_com.pages
             Boolean check_status = page.check_new_raw_exist(data);
             Assert.AreEqual(true, check_status);
 
+        }
+
+        [TestCase(new object[] {new string[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
+        public void test_guest_can_edit_existing_row(string[] data)
+        {
+            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            page.open_page();
+            page.edit_existing_table(data);
+            Boolean check_status = page.check_new_raw_exist(data);
+            Assert.AreEqual(true, check_status);
         }
         
         [TearDown]
