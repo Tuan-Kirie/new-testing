@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
+using System.IO;
 
 namespace demoqa_com.pages
 {
@@ -10,6 +11,15 @@ namespace demoqa_com.pages
         public IWebDriver driver;
         public string url;
         public int timeout;
+        
+        //Uploading files directory
+        public string project_path = Path.GetDirectoryName(Path.GetDirectoryName(
+            System.IO.Path.GetDirectoryName( 
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase )));
+        public string UploadFilesPath
+        {
+            get => (project_path.Replace("\\", "/") + "/files/").Substring(6);
+        }
 
         public BasePage(IWebDriver driver, string url, int timeout = 4)
         {

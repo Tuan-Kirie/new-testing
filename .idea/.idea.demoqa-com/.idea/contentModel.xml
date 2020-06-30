@@ -9,6 +9,9 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="demoqa-com.csproj" t="IncludeRecursive" />
         <e p="ElementPageTest.cs" t="Include" />
+        <e p="files" t="Include">
+          <e p="test_file.txt" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive" />
         <e p="packages.config" t="Include" />
         <e p="pages" t="Include">

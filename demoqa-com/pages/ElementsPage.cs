@@ -16,6 +16,7 @@ namespace demoqa_com.pages
         private const string radioBtnPageBtn = "//span[text()='Radio Button']//ancestor::li";
         private const string webTablesPageBtn = "//span[text()='Web Tables']//ancestor::li";
         private const string buttonsPageBtn = "//span[text()='Buttons']//ancestor::li";
+        private const string upldowPageBtn = "//span[text()='Upload and Download']//ancestor::li";
         // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
@@ -46,11 +47,15 @@ namespace demoqa_com.pages
         private const string webTablesUserFormInputs = "#userForm input";
         private const string webTablesRow = ".rt-tr[role=row].-odd";
         
-        //
+        //ButtonsPage Locators
         private const string btnDoubleClickBtn = "#doubleClickBtn";
         private const string btnRightClickBtn = "#rightClickBtn";
         private const string btnLeftClickBtn = "//button[text()='Click Me']";
         
+        //Upload and Download page Locators;
+        private const string uplodownSelectBtn = "#uploadFile";
+        private const string uplodownDownloadBtn = "#downloadButton";
+        private const string uplodownResult = "#uploadedFilePath";
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -239,7 +244,6 @@ namespace demoqa_com.pages
         {
             IWebElement buttons_page_btn = this.driver.FindElement(By.XPath(buttonsPageBtn));
             buttons_page_btn.Click();
-            
         }
 
         public void click_to_double_click_btn()
@@ -282,6 +286,32 @@ namespace demoqa_com.pages
             catch (NoSuchElementException)
             {
                 return false;
+            }
+
+            return false;
+        }
+        
+        public void go_to_uplodown_page()
+        {
+            IWebElement elem  = this.driver.FindElement(By.XPath(upldowPageBtn));
+            elem.Click();
+        }
+
+        public void upload_test_file(string file_name)
+        {
+            IWebElement upload_inp = this.driver.FindElement(By.CssSelector(uplodownSelectBtn));
+            string upload_file = UploadFilesPath + file_name;
+            upload_inp.SendKeys(upload_file);
+            
+        }
+
+        public Boolean check_file_upload(string file_name)
+        {
+            IWebElement res = this.driver.FindElement(By.CssSelector(uplodownResult));
+            string result = res.Text;
+            if (result == "C:\\fakepath\\" + file_name)
+            {
+                return true;
             }
 
             return false;

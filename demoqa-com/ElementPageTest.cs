@@ -14,7 +14,7 @@ namespace demoqa_com.pages
         private string radio_btn_url = "https://demoqa.com/radio-button";
         private string web_tables_btn_url = "https://demoqa.com/webtables";
         private string buttons_btn_url = "https://demoqa.com/buttons";
-        
+        private string uplodown_btn_url = "https://demoqa.com/upload-download";
         [SetUp]
         public void initChromeDriver()
         {
@@ -152,6 +152,24 @@ namespace demoqa_com.pages
 
             Boolean click_res = page.check_btn_click(click_type);
             Assert.True(click_res);
+        }
+
+        [Test]
+        public void test_guest_can_go_to_upload_download_page()
+        {
+            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            page.go_to_uplodown_page();
+            Assert.AreEqual(uplodown_btn_url, this.driver.Url);
+        }
+
+        [Test]
+        public void test_guest_can_upload_file()
+        {
+            ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
+            page.open_page();
+            page.upload_test_file("test_file.txt");
+            Boolean check_res = page.check_file_upload("test_file.txt");
+            Assert.True(check_res);
         }
         
         [TearDown]
