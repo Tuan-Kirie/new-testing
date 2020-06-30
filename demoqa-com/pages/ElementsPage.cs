@@ -195,5 +195,37 @@ namespace demoqa_com.pages
 
             return true;
         }
+
+        public string[] delete_existing_row()
+        {
+            IWebElement existing_row = this.driver.FindElement(By.CssSelector(webTablesRow));
+            List<IWebElement> row_elems_B = new List<IWebElement>(existing_row.FindElements(By.CssSelector("div")));
+            row_elems_B.RemoveAt(row_elems_B.Count - 1);
+            string[] row_content = new string[row_elems_B.Count];
+            for (int i = 0; i < row_elems_B.Count; i++)
+            {
+                row_content[i] = row_elems_B[i].Text;
+            }
+            IWebElement delete_btn = this.driver.FindElement(By.CssSelector(webTablesRemoveBtn));
+            delete_btn.Click();
+            return row_content;
+        }
+
+        public Boolean check_row_deleting(string[] data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (!check_element_in_Dom_XPATH(data[i]))
+                {
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

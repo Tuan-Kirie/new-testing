@@ -109,6 +109,16 @@ namespace demoqa_com.pages
             Boolean check_status = page.check_new_raw_exist(data);
             Assert.AreEqual(true, check_status);
         }
+
+        [Test]
+        public void test_guest_can_delete_row()
+        {
+            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            page.open_page();
+            string[] data = page.delete_existing_row();
+            Boolean check_status = page.check_row_deleting(data);
+            Assert.AreEqual(true, check_status);
+        }
         
         [TearDown]
         public void close_driver()
