@@ -13,6 +13,7 @@ namespace demoqa_com.pages
         private string text_box_url = "https://demoqa.com/text-box";
         private string radio_btn_url = "https://demoqa.com/radio-button";
         private string web_tables_btn_url = "https://demoqa.com/webtables";
+        private string buttons_btn_url = "https://demoqa.com/buttons";
         
         [SetUp]
         public void initChromeDriver()
@@ -118,6 +119,39 @@ namespace demoqa_com.pages
             string[] data = page.delete_existing_row();
             Boolean check_status = page.check_row_deleting(data);
             Assert.AreEqual(true, check_status);
+        }
+
+        [Test]
+        public void test_guest_can_go_to_buttons_page()
+        {
+            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            page.open_page();
+            page.go_to_buttons_page();
+            Assert.AreEqual("https://demoqa.com/buttons", this.driver.Url, "Not right Url");
+        }
+
+        [TestCase("double")]
+        [TestCase("right")]
+        [TestCase("left")]
+        public void test_guest_can_click_to_btns(string click_type)
+        {
+            ElementsPage page = new ElementsPage(driver, buttons_btn_url);
+            page.open_page();
+            switch (click_type)
+            {
+                case "double":
+                    page.click_to_double_click_btn();
+                    break;
+                case "right":
+                    page.click_to_right_click_btn();
+                    break;
+                case "left":
+                    page.click_to_common_click_btn();
+                    break;
+            }
+
+            Boolean click_res = page.check_btn_click(click_type);
+            Assert.True(click_res);
         }
         
         [TearDown]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.Extensions;
 
 namespace demoqa_com.pages
@@ -14,7 +15,7 @@ namespace demoqa_com.pages
         private const string textBoxPageBtn = "//span[text()='Text Box']//ancestor::li";
         private const string radioBtnPageBtn = "//span[text()='Radio Button']//ancestor::li";
         private const string webTablesPageBtn = "//span[text()='Web Tables']//ancestor::li";
-        
+        private const string buttonsPageBtn = "//span[text()='Buttons']//ancestor::li";
         // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
@@ -44,6 +45,12 @@ namespace demoqa_com.pages
         private const string webTablesUserForm = "#userForm";
         private const string webTablesUserFormInputs = "#userForm input";
         private const string webTablesRow = ".rt-tr[role=row].-odd";
+        
+        //
+        private const string btnDoubleClickBtn = "#doubleClickBtn";
+        private const string btnRightClickBtn = "#rightClickBtn";
+        private const string btnLeftClickBtn = "//button[text()='Click Me']";
+        
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -226,6 +233,58 @@ namespace demoqa_com.pages
             }
 
             return true;
+        }
+
+        public void go_to_buttons_page()
+        {
+            IWebElement buttons_page_btn = this.driver.FindElement(By.XPath(buttonsPageBtn));
+            buttons_page_btn.Click();
+            
+        }
+
+        public void click_to_double_click_btn()
+        {
+            Actions action = new Actions(this.driver);
+            IWebElement btn = this.driver.FindElement(By.CssSelector(btnDoubleClickBtn));
+            action.DoubleClick(btn).Perform();
+        }
+
+        public void click_to_right_click_btn()
+        {    
+            Actions action = new Actions(this.driver);
+            IWebElement btn = this.driver.FindElement(By.CssSelector(btnRightClickBtn));
+            action.ContextClick(btn).Perform();
+        }
+
+        public void click_to_common_click_btn()
+        {
+            IWebElement btn = this.driver.FindElement(By.XPath(btnLeftClickBtn));
+            btn.Click();
+        }
+
+        public Boolean check_btn_click(string btn_type)
+        {
+            try
+            {
+                switch (btn_type)
+                {
+                    case "double":
+                        this.driver.FindElement(By.CssSelector("#doubleClickMessage"));
+                        return true;
+                    case "left":
+                        this.driver.FindElement(By.CssSelector("#dynamicClickMessage"));
+                        return true;
+                    case "right":
+                        this.driver.FindElement(By.CssSelector("#rightClickMessage"));
+                        return true;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+
+            return false;
         }
     }
 }
