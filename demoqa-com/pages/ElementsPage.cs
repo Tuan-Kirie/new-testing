@@ -70,7 +70,7 @@ namespace demoqa_com.pages
         private const string noContentLink = "#no-content";
         private const string movedLink = "#moved";
         private const string badRequestLink = "#bad-request";
-        private const string unathorizedLink = "unauthorized";
+        private const string unathorizedLink = "#unauthorized";
         private const string forbiddenLink = "#forbidden";
         private const string notFoundLink = "#invalid-url";
         private const string linkResponse = "#linkResponse";
@@ -388,17 +388,15 @@ namespace demoqa_com.pages
                     IWebElement elem4 = this.driver.FindElement(By.CssSelector(badRequestLink));
                     elem4.Click();
                     break;
+                //Click with JS cause cant click with selenium common method
                 case "unauthorized":
-                    IWebElement elem5 = this.driver.FindElement(By.CssSelector(unathorizedLink));
-                    elem5.Click();
+                    click_to_element_with_js(unathorizedLink.TrimStart('#'));
                     break;
                 case "forbidden":
-                    IWebElement elem6 = this.driver.FindElement(By.CssSelector(forbiddenLink));
-                    elem6.Click();
+                    click_to_element_with_js(forbiddenLink.TrimStart('#'));
                     break;
                 case "not-found":
-                    IWebElement elem7 = this.driver.FindElement(By.CssSelector(notFoundLink));
-                    elem7.Click();
+                    click_to_element_with_js(notFoundLink.TrimStart('#'));
                     break;
             }
         }
