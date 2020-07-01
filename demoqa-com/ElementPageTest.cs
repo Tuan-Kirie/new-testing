@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace demoqa_com.pages
 {
@@ -11,21 +9,21 @@ namespace demoqa_com.pages
     //[TestFixture("Edge")]
     public class ElementPageTest
     {
-        private string browserName;
+        private readonly string _browserName;
         private IWebDriver driver = null;
-        private string elements_page_url = "https://demoqa.com/elements";
-        private string text_box_url = "https://demoqa.com/text-box";
-        private string radio_btn_url = "https://demoqa.com/radio-button";
-        private string web_tables_btn_url = "https://demoqa.com/webtables";
-        private string buttons_btn_url = "https://demoqa.com/buttons";
-        private string uplodown_btn_url = "https://demoqa.com/upload-download";
-        private string links_btn_url = "https://demoqa.com/links";
-        private string dynamicProp_btn_url = "https://demoqa.com/dynamic-properties";
-        private string base_url = "https://demoqa.com/";
+        private const string elements_page_url = "https://demoqa.com/elements";
+        private const string text_box_url = "https://demoqa.com/text-box";
+        private const string radio_btn_url = "https://demoqa.com/radio-button";
+        private const string web_tables_btn_url = "https://demoqa.com/webtables";
+        private const string buttons_btn_url = "https://demoqa.com/buttons";
+        private const string uplodown_btn_url = "https://demoqa.com/upload-download";
+        private const string links_btn_url = "https://demoqa.com/links";
+        private const string dynamicProp_btn_url = "https://demoqa.com/dynamic-properties";
+        private const string base_url = "https://demoqa.com/";
 
         public ElementPageTest(string browserName)
         {
-            this.browserName = browserName;
+            this._browserName = browserName;
         }
         
 
@@ -33,7 +31,7 @@ namespace demoqa_com.pages
         public void Initialize()
         {
             DriverInitializer initializer = new DriverInitializer();
-            this.driver = initializer.InitDriver(this.browserName);
+            this.driver = initializer.InitDriver(this._browserName);
         }
         
         [Test]
@@ -48,31 +46,31 @@ namespace demoqa_com.pages
         [Test, Combinatorial]
         public void test_full_name_input_text_box_page(
             [Values("testuser", "Testuser", "@Testuser", "_Testuser")]
-            string full_name)
+            string fullName)
         {
             ElementsPage page = new ElementsPage(driver, text_box_url);
             page.open_page();
-            page.input_data_to_full_name(full_name);
+            page.input_data_to_full_name(fullName);
             page.submit_form();
             IWebElement res = page.get_form_send_result();
-            IWebElement res_name = res.FindElement(By.Id("name"));
-            string name = res_name.Text.Substring(5);
-            Assert.AreEqual(full_name, name, "Input names are not equal");
+            IWebElement resName = res.FindElement(By.Id("name"));
+            string name = resName.Text.Substring(5);
+            Assert.AreEqual(fullName, name, "Input names are not equal");
         }
 
         [Test, Sequential]
         public void test_email_input_test_box_page(
             [Values("testuser@testmail.com", "testuser@testmailcom", "testuser.com")]
             string email,
-            [Values(true, false, false)] Boolean expected_result
+            [Values(true, false, false)] Boolean expectedResult
         )
         {
             ElementsPage page = new ElementsPage(driver, text_box_url);
             page.open_page();
             page.input_data_to_email(email);
             page.submit_form();
-            bool email_res = page.check_email_send_res(email);
-            Assert.AreEqual(expected_result, email_res, "Input email are not equal");
+            bool emailRes = page.check_email_send_res(email);
+            Assert.AreEqual(expectedResult, emailRes, "Input email are not equal");
         }
 
         [Test]
@@ -86,15 +84,15 @@ namespace demoqa_com.pages
 
         [Test, Sequential]
         public void test_guest_can_select_radio(
-            [Values("Yes", "Impressive", "No")] string radio_type,
-            [Values(true, true, false)] Boolean expected_result
+            [Values("Yes", "Impressive", "No")] string radioType,
+            [Values(true, true, false)] Boolean expectedResult
         )
         {
             ElementsPage page = new ElementsPage(driver, radio_btn_url);
             page.open_page();
-            page.click_radio(radio_type);
-            Boolean res = page.check_radio_select_res(radio_type);
-            Assert.AreEqual(expected_result, res, "Error with radio btn selection");
+            page.click_radio(radioType);
+            Boolean res = page.check_radio_select_res(radioType);
+            Assert.AreEqual(expectedResult, res, "Error with radio btn selection");
         }
 
         [Test]
@@ -106,25 +104,25 @@ namespace demoqa_com.pages
             Assert.AreEqual(web_tables_btn_url, page.driver.Url, "Not correct page");
         }
 
-        [TestCase(new object[] {new string[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
+        [TestCase(new object[] {new[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
         public void test_guest_can_add_new_row(string[] data)
         {
             ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
             page.open_page();
             page.add_new_table_row(data);
-            Boolean check_status = page.check_new_raw_exist(data);
-            Assert.AreEqual(true, check_status);
+            Boolean checkStatus = page.check_new_raw_exist(data);
+            Assert.AreEqual(true, checkStatus);
 
         }
 
-        [TestCase(new object[] {new string[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
+        [TestCase(new object[] {new[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
         public void test_guest_can_edit_existing_row(string[] data)
         {
             ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
             page.open_page();
             page.edit_existing_table(data);
-            Boolean check_status = page.check_new_raw_exist(data);
-            Assert.AreEqual(true, check_status);
+            Boolean checkStatus = page.check_new_raw_exist(data);
+            Assert.AreEqual(true, checkStatus);
         }
 
         [Test]
@@ -133,8 +131,8 @@ namespace demoqa_com.pages
             ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
             page.open_page();
             string[] data = page.delete_existing_row();
-            Boolean check_status = page.check_row_deleting(data);
-            Assert.AreEqual(true, check_status);
+            Boolean checkStatus = page.check_row_deleting(data);
+            Assert.AreEqual(true, checkStatus);
         }
 
         [Test]
@@ -149,11 +147,11 @@ namespace demoqa_com.pages
         [TestCase("double")]
         [TestCase("right")]
         [TestCase("left")]
-        public void test_guest_can_click_to_btns(string click_type)
+        public void test_guest_can_click_to_btns(string clickType)
         {
             ElementsPage page = new ElementsPage(driver, buttons_btn_url);
             page.open_page();
-            switch (click_type)
+            switch (clickType)
             {
                 case "double":
                     page.click_to_double_click_btn();
@@ -166,8 +164,8 @@ namespace demoqa_com.pages
                     break;
             }
 
-            Boolean click_res = page.check_btn_click(click_type);
-            Assert.True(click_res);
+            Boolean clickRes = page.check_btn_click(clickType);
+            Assert.True(clickRes);
         }
 
         [Test]
@@ -184,8 +182,8 @@ namespace demoqa_com.pages
             ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
             page.open_page();
             page.upload_test_file("test_file.txt");
-            Boolean check_res = page.check_file_upload("test_file.txt");
-            Assert.True(check_res);
+            Boolean checkRes = page.check_file_upload("test_file.txt");
+            Assert.True(checkRes);
         }
 
         [Test]
@@ -194,8 +192,8 @@ namespace demoqa_com.pages
             ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
             page.open_page();
             page.uplodown_download_file();
-            Boolean check_res = page.check_file_download("sampleFile.jpeg");
-            Assert.True(check_res);
+            Boolean checkRes = page.check_file_download("sampleFile.jpeg");
+            Assert.True(checkRes);
         }
 
         [Test]
@@ -209,29 +207,29 @@ namespace demoqa_com.pages
 
         [TestCase("common")]
         [TestCase("dynamic")]
-        public void test_links_with_new_tab(string link_type)
+        public void test_links_with_new_tab(string linkType)
         {
             ElementsPage page = new ElementsPage(this.driver, links_btn_url);
             page.open_page();
-            string opened_link = page.open_link_in_new_tab(link_type);
-            Assert.AreEqual(base_url, opened_link);
+            string openedLink = page.open_link_in_new_tab(linkType);
+            Assert.AreEqual(base_url, openedLink);
         }
 
         [Test, Sequential]
         public void test_links_with_api_call(
             [Values("created", "no-content", "moved", "bad-request", "unauthorized", "forbidden", "not-found")]
-            string link_type)
+            string linkType)
         {
             ElementsPage page = new ElementsPage(this.driver, links_btn_url);
             page.open_page();
-            page.click_link_with_api_call(link_type);
-            bool check_res = page.check_click_res(link_type);
-            Assert.True(check_res);
+            page.click_link_with_api_call(linkType);
+            bool checkRes = page.check_click_res(linkType);
+            Assert.True(checkRes);
         }
 
         [Test]
         [Ignore("Element not clickable with standard method, this test will be fallen down")]
-        public void test_guest_can_go_to_dynamic_proprties_page()
+        public void test_guest_can_go_to_dynamic_properties_page()
         {
             ElementsPage page = new ElementsPage(this.driver, elements_page_url);
             page.open_page();
@@ -245,8 +243,8 @@ namespace demoqa_com.pages
         {
             ElementsPage page = new ElementsPage(this.driver, dynamicProp_btn_url);
             page.open_page();
-            bool check_res = page.check_dynamic_button_clickable();
-            Assert.True(check_res);
+            bool checkRes = page.check_dynamic_button_clickable();
+            Assert.True(checkRes);
         }
 
         [TearDown]
