@@ -23,6 +23,7 @@ namespace demoqa_com.pages
         private const string buttonsPageBtn = "//span[text()='Buttons']//ancestor::li";
         private const string upldowPageBtn = "//span[text()='Upload and Download']//ancestor::li";
         private const string linksPageBtn = "//span[text()='Links']//ancestor::li";
+        private const string dynamicPageBtn = "//span[text()='Dynamic Properties']//ancestor::li";
         // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
@@ -75,6 +76,12 @@ namespace demoqa_com.pages
         private const string notFoundLink = "#invalid-url";
         private const string linkResponse = "#linkResponse";
         
+        //Dynamic Properties
+        private const string dynamicEnableAfterbtn = "#enableAfter";
+        private const string dynamicColorChangebtn = "#colorChange";
+        private const string dynamicVisibleAfterbtn = "//*[text()='Visible After 5 Seconds']";
+
+
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -434,5 +441,17 @@ namespace demoqa_com.pages
 
             return false;
         }
+
+        public void go_to_dynamic_properties_page()
+        {
+            IWebElement elem = this.driver.FindElement(By.XPath(dynamicPageBtn));
+            elem.Click();
+        }
+
+        public bool check_dynamic_button_clickable()
+        {
+            return check_element_is_clickable(dynamicEnableAfterbtn);
+        }
+
     }
 }

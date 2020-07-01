@@ -59,7 +59,7 @@ namespace demoqa_com.pages
             }
         }
 
-        public IWebElement check_element_is_clickable(string locator)
+        public IWebElement check_element_is_visible(string locator)
         {
             try
             {
@@ -70,6 +70,19 @@ namespace demoqa_com.pages
             catch (WebDriverTimeoutException)
             {
                 return null;
+            }
+        }
+        public bool check_element_is_clickable(string locator)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, 6));
+                IWebElement elem = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locator)));
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return false;
             }
         }
 
@@ -111,7 +124,7 @@ namespace demoqa_com.pages
 
             return false;
         }
-
+        
         
     }
 }

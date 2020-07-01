@@ -10,24 +10,26 @@ namespace demoqa_com.pages
     public class ElementPageTest
     {
         public IWebDriver driver = null;
+
         public ChromeOptions ChromdeDriverOptions
         {
             get
-            {    
+            {
                 string project_path = Path.GetDirectoryName(Path.GetDirectoryName(
-                    System.IO.Path.GetDirectoryName( 
-                        System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase )));
-                string download_path = (project_path.Replace("\\", Path.DirectorySeparatorChar.ToString()) + "\\Download").Substring(6);
+                    System.IO.Path.GetDirectoryName(
+                        System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)));
+                string download_path =
+                    (project_path.Replace("\\", Path.DirectorySeparatorChar.ToString()) + "\\Download").Substring(6);
                 ChromeOptions options = new ChromeOptions();
                 options.AddUserProfilePreference("download.default_directory", download_path);
                 options.AddUserProfilePreference("download.prompt_for_download", "false");
-                options.AddUserProfilePreference( "directory_upgrade",true);
-                options.AddUserProfilePreference( "safebrowsing.enabled", true);
+                options.AddUserProfilePreference("directory_upgrade", true);
+                options.AddUserProfilePreference("safebrowsing.enabled", true);
                 options.AddUserProfilePreference("safebrowsing_for_trusted_sources_enabled", false);
                 return options;
             }
         }
-        
+
         private string elements_page_url = "https://demoqa.com/elements";
         private string text_box_url = "https://demoqa.com/text-box";
         private string radio_btn_url = "https://demoqa.com/radio-button";
@@ -35,18 +37,20 @@ namespace demoqa_com.pages
         private string buttons_btn_url = "https://demoqa.com/buttons";
         private string uplodown_btn_url = "https://demoqa.com/upload-download";
         private string links_btn_url = "https://demoqa.com/links";
+        private string dynamicProp_btn_url = "https://demoqa.com/dynamic-properties";
         private string base_url = "https://demoqa.com/";
+
         [SetUp]
         public void initChromeDriver()
         {
             this.driver = new ChromeDriver(ChromdeDriverOptions);
-            
+
         }
-        
+
         [Test]
         public void test_guest_can_go_to_text_box_page()
         {
-            ElementsPage page = new  ElementsPage(driver, elements_page_url);
+            ElementsPage page = new ElementsPage(driver, elements_page_url);
             page.open_page();
             page.open_test_box();
             Assert.AreEqual("https://demoqa.com/text-box", this.driver.Url, "Not Right Url");
@@ -69,9 +73,10 @@ namespace demoqa_com.pages
 
         [Test, Sequential]
         public void test_email_input_test_box_page(
-            [Values("testuser@testmail.com", "testuser@testmailcom", "testuser.com")] string email,
+            [Values("testuser@testmail.com", "testuser@testmailcom", "testuser.com")]
+            string email,
             [Values(true, false, false)] Boolean expected_result
-            )
+        )
         {
             ElementsPage page = new ElementsPage(driver, text_box_url);
             page.open_page();
@@ -94,7 +99,7 @@ namespace demoqa_com.pages
         public void test_guest_can_select_radio(
             [Values("Yes", "Impressive", "No")] string radio_type,
             [Values(true, true, false)] Boolean expected_result
-            )
+        )
         {
             ElementsPage page = new ElementsPage(driver, radio_btn_url);
             page.open_page();
@@ -222,9 +227,11 @@ namespace demoqa_com.pages
             string opened_link = page.open_link_in_new_tab(link_type);
             Assert.AreEqual(base_url, opened_link);
         }
-        
+
         [Test, Sequential]
-        public void test_links_with_api_call([Values("created", "no-content", "moved", "bad-request", "unauthorized", "forbidden", "not-found")] string link_type)
+        public void test_links_with_api_call(
+            [Values("created", "no-content", "moved", "bad-request", "unauthorized", "forbidden", "not-found")]
+            string link_type)
         {
             ElementsPage page = new ElementsPage(this.driver, links_btn_url);
             page.open_page();
@@ -232,7 +239,27 @@ namespace demoqa_com.pages
             bool check_res = page.check_click_res(link_type);
             Assert.True(check_res);
         }
+
+        //Element not cickable with standard method, this test will be fallen down
+        [Test]
+        public void test_guest_can_go_to_dynamic_proprties_page()
+        {
+            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            page.open_page();
+            page.go_to_dynamic_properties_page();
+            Assert.AreEqual(dynamicProp_btn_url, this.driver.Url);
+        }
         
+        
+        [Test]
+        public void test_btn_are_visible()
+        {
+            ElementsPage page = new ElementsPage(this.driver, dynamicProp_btn_url);
+            page.open_page();
+            bool check_res = page.check_dynamic_button_clickable();
+            Assert.True(check_res);
+        }
+
         [TearDown]
         public void close_driver()
         {
