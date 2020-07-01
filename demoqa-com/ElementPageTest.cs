@@ -6,30 +6,13 @@ using OpenQA.Selenium.Chrome;
 
 namespace demoqa_com.pages
 {
-    [TestFixture]
+    [TestFixture("Chrome")]
+    [TestFixture("Firefox")]
+    //[TestFixture("Edge")]
     public class ElementPageTest
     {
-        public IWebDriver driver = null;
-
-        public ChromeOptions ChromdeDriverOptions
-        {
-            get
-            {
-                string project_path = Path.GetDirectoryName(Path.GetDirectoryName(
-                    System.IO.Path.GetDirectoryName(
-                        System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)));
-                string download_path =
-                    (project_path.Replace("\\", Path.DirectorySeparatorChar.ToString()) + "\\Download").Substring(6);
-                ChromeOptions options = new ChromeOptions();
-                options.AddUserProfilePreference("download.default_directory", download_path);
-                options.AddUserProfilePreference("download.prompt_for_download", "false");
-                options.AddUserProfilePreference("directory_upgrade", true);
-                options.AddUserProfilePreference("safebrowsing.enabled", true);
-                options.AddUserProfilePreference("safebrowsing_for_trusted_sources_enabled", false);
-                return options;
-            }
-        }
-
+        private string browserName;
+        private IWebDriver driver = null;
         private string elements_page_url = "https://demoqa.com/elements";
         private string text_box_url = "https://demoqa.com/text-box";
         private string radio_btn_url = "https://demoqa.com/radio-button";
@@ -40,13 +23,19 @@ namespace demoqa_com.pages
         private string dynamicProp_btn_url = "https://demoqa.com/dynamic-properties";
         private string base_url = "https://demoqa.com/";
 
-        [SetUp]
-        public void initChromeDriver()
+        public ElementPageTest(string browserName)
         {
-            this.driver = new ChromeDriver(ChromdeDriverOptions);
-
+            this.browserName = browserName;
         }
+        
 
+        [SetUp]
+        public void Initialize()
+        {
+            DriverInitializer initializer = new DriverInitializer();
+            this.driver = initializer.InitDriver(this.browserName);
+        }
+        
         [Test]
         public void test_guest_can_go_to_text_box_page()
         {

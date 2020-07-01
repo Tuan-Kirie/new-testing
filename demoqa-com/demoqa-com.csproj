@@ -57,6 +57,7 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Driver.cs" />
         <Compile Include="ElementPageTest.cs" />
         <Compile Include="pages\BasePage.cs" />
         <Compile Include="pages\ElementsPage.cs" />

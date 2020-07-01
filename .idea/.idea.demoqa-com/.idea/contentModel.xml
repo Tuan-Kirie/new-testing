@@ -9,6 +9,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="demoqa-com.csproj" t="IncludeRecursive" />
         <e p="download" t="Include" />
+        <e p="driver.cs" t="Include" />
         <e p="ElementPageTest.cs" t="Include" />
         <e p="files" t="Include">
           <e p="test_file.txt" t="Include" />
