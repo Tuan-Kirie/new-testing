@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.Extensions;
+using OpenQA.Selenium.Support.UI;
+using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace demoqa_com.pages
 
@@ -17,6 +22,7 @@ namespace demoqa_com.pages
         private const string webTablesPageBtn = "//span[text()='Web Tables']//ancestor::li";
         private const string buttonsPageBtn = "//span[text()='Buttons']//ancestor::li";
         private const string upldowPageBtn = "//span[text()='Upload and Download']//ancestor::li";
+        private const string linksPageBtn = "//span[text()='Links']//ancestor::li";
         // TextBoxPage locators
         private const string textBoxFullNameInp = "#userName-wrapper input";
         private const string textBoxSubmitBtn = "#submit";
@@ -56,6 +62,19 @@ namespace demoqa_com.pages
         private const string uplodownSelectBtn = "#uploadFile";
         private const string uplodownDownloadBtn = "#downloadButton";
         private const string uplodownResult = "#uploadedFilePath";
+        
+        //Links page Locators
+        private const string linksCommonLink = "#simpleLink";
+        private const string linksDynamicLink = "#dynamicLink";
+        private const string createdLink = "#created";
+        private const string noContentLink = "#no-content";
+        private const string movedLink = "#moved";
+        private const string badRequestLink = "#bad-request";
+        private const string unathorizedLink = "unauthorized";
+        private const string forbiddenLink = "#forbidden";
+        private const string notFoundLink = "#invalid-url";
+        private const string linkResponse = "#linkResponse";
+        
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
             this.driver = driver;
@@ -321,6 +340,101 @@ namespace demoqa_com.pages
         {
             IWebElement elem = this.driver.FindElement(By.CssSelector(uplodownDownloadBtn));
             elem.Click();
+        }
+        
+        public void go_to_links_page()
+        {
+            IWebElement elem  = this.driver.FindElement(By.XPath(linksPageBtn));
+            elem.Click();
+        }
+
+        public string open_link_in_new_tab(string link_type)
+        {
+            if (link_type == "common")
+            {
+                IWebElement elem = this.driver.FindElement(By.CssSelector(linksCommonLink));
+                elem.Click();
+            }else if (link_type == "dynamic")
+            {
+                IWebElement elem = this.driver.FindElement(By.CssSelector(linksDynamicLink));
+                elem.Click();
+            }
+    
+            Collection<string> tabs = new Collection<string>(this.driver.WindowHandles);
+            this.driver.SwitchTo().Window(tabs[tabs.Count - 1]);
+            string opened_link = this.driver.Url;
+            this.driver.Close();
+            this.driver.SwitchTo().Window(tabs[0]);
+            return opened_link;
+        }
+
+        public void click_link_with_api_call(string link_type)
+        {
+            switch (link_type)
+            {
+                case "created":
+                    IWebElement elem1 = this.driver.FindElement(By.CssSelector(createdLink));
+                    elem1.Click();
+                    break;
+                case "no-content":
+                    IWebElement elem2 = this.driver.FindElement(By.CssSelector(noContentLink));
+                    elem2.Click();
+                    break;
+                case "moved":
+                    IWebElement elem3 = this.driver.FindElement(By.CssSelector(movedLink));
+                    elem3.Click();
+                    break;
+                case "bad-request":
+                    IWebElement elem4 = this.driver.FindElement(By.CssSelector(badRequestLink));
+                    elem4.Click();
+                    break;
+                case "unauthorized":
+                    IWebElement elem5 = this.driver.FindElement(By.CssSelector(unathorizedLink));
+                    elem5.Click();
+                    break;
+                case "forbidden":
+                    IWebElement elem6 = this.driver.FindElement(By.CssSelector(forbiddenLink));
+                    elem6.Click();
+                    break;
+                case "not-found":
+                    IWebElement elem7 = this.driver.FindElement(By.CssSelector(notFoundLink));
+                    elem7.Click();
+                    break;
+            }
+        }
+
+        public bool check_click_res(string link_type)
+        {
+            IWebElement click_res = null;
+            WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, 3));
+            try
+            {
+                click_res = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(linkResponse)));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return false;
+            }
+            string checking_row = click_res.Text;
+            switch (link_type)
+            {
+                case "created":
+                    return checking_row.Contains("Created");
+                case "no-content":
+                    return checking_row.Contains("No Content");
+                case "moved":
+                    return checking_row.Contains("Moved Permanently");
+                case "bad-request":
+                    return checking_row.Contains("Bad Request");
+                case "unauthorized":
+                    return checking_row.Contains("Unauthorized");
+                case "forbidden":
+                    return checking_row.Contains("Forbidden");
+                case "not-found":
+                    return checking_row.Contains("Not Found");
+            }
+
+            return false;
         }
     }
 }

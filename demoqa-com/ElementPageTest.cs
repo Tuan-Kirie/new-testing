@@ -34,6 +34,8 @@ namespace demoqa_com.pages
         private string web_tables_btn_url = "https://demoqa.com/webtables";
         private string buttons_btn_url = "https://demoqa.com/buttons";
         private string uplodown_btn_url = "https://demoqa.com/upload-download";
+        private string links_btn_url = "https://demoqa.com/links";
+        private string base_url = "https://demoqa.com/";
         [SetUp]
         public void initChromeDriver()
         {
@@ -199,6 +201,35 @@ namespace demoqa_com.pages
             page.open_page();
             page.uplodown_download_file();
             Boolean check_res = page.check_file_download("sampleFile.jpeg");
+            Assert.True(check_res);
+        }
+
+        [Test]
+        public void test_guest_can_go_links_page()
+        {
+            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            page.open_page();
+            page.go_to_links_page();
+            Assert.AreEqual(links_btn_url, this.driver.Url);
+        }
+
+        [TestCase("common")]
+        [TestCase("dynamic")]
+        public void test_links_with_new_tab(string link_type)
+        {
+            ElementsPage page = new ElementsPage(this.driver, links_btn_url);
+            page.open_page();
+            string opened_link = page.open_link_in_new_tab(link_type);
+            Assert.AreEqual(base_url, opened_link);
+        }
+        
+        [Test, Sequential]
+        public void test_links_with_api_call([Values("created", "no-content", "moved", "bad-request", "unauthorized", "forbidden", "not-found")] string link_type)
+        {
+            ElementsPage page = new ElementsPage(this.driver, links_btn_url);
+            page.open_page();
+            page.click_link_with_api_call(link_type);
+            bool check_res = page.check_click_res(link_type);
             Assert.True(check_res);
         }
         

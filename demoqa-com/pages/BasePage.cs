@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
+using System.Linq;
 
 namespace demoqa_com.pages
 {
@@ -109,5 +111,7 @@ namespace demoqa_com.pages
 
             return false;
         }
+
+        
     }
 }
