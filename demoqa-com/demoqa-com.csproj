@@ -67,10 +67,8 @@
       <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="Download\Zaglushka.txt" />
       <Content Include="files\test_file.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Download" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

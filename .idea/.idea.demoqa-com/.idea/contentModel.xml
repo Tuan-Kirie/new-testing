@@ -8,7 +8,9 @@
       <e p="demoqa-com" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="demoqa-com.csproj" t="IncludeRecursive" />
-        <e p="download" t="Include" />
+        <e p="download" t="Include">
+          <e p="Zaglushka.txt" t="Include" />
+        </e>
         <e p="driver.cs" t="Include" />
         <e p="ElementPageTest.cs" t="Include" />
         <e p="files" t="Include">
