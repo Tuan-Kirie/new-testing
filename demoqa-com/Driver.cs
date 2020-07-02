@@ -27,7 +27,7 @@ namespace demoqa_com.pages
             get => ProjectPath + "Download";
         }
         
-        private static ChromeOptions ConfigureOptionsChrome(string browserName) {
+        private static ChromeOptions ConfigureOptionsChrome() {
             ChromeOptions chromeOption = new ChromeOptions();
             chromeOption.AddUserProfilePreference("download.default_directory", DownloadPath);
             chromeOption.AddUserProfilePreference("download.prompt_for_download", "false");
@@ -36,16 +36,28 @@ namespace demoqa_com.pages
             chromeOption.AddUserProfilePreference("safebrowsing_for_trusted_sources_enabled", false);
             return chromeOption;
         }
+
+        private static FirefoxOptions ConfigureOptionsFirefox()
+        {
+            FirefoxOptions options = new FirefoxOptions();
+            options.SetPreference("browser.download.dir", DownloadPath);
+            options.SetPreference("browser.download.folderList", 2);
+            options.SetPreference("browser.download.useDownloadDir", true);
+            options.SetPreference("browser.helperApps.alwaysAsk.force", false);
+            options.SetPreference("browser.download.manager.showWhenStarting",false);
+            options.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip,application/octet-stream,image/jpeg,application/vnd.ms-outlook,text/html,application/pdf");
+            return options;
+        }
         
         public IWebDriver InitDriver(string browserName)
         {
             switch (browserName)
             {
                 case "Chrome":
-                    driver = new ChromeDriver(ConfigureOptionsChrome(browserName));
+                    driver = new ChromeDriver(ConfigureOptionsChrome());
                     return driver;
                 case "Firefox":
-                    driver = new FirefoxDriver();
+                    driver = new FirefoxDriver(ConfigureOptionsFirefox());
                     return driver;
                 case "Edge":
                     driver = new EdgeDriver();
