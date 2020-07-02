@@ -17,7 +17,7 @@ namespace demoqa_com.pages
         //Uploading files directory
         public string UploadFilesPath
         {
-            get => DriverInitializer.ProjectPath + "/files/";
+            get => DriverInitializer.ProjectPath + "files\\";
         }
 
         public string DownLoadFilesPath

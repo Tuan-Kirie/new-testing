@@ -439,5 +439,13 @@ namespace demoqa_com.pages
             return check_element_is_clickable(DynamicEnableAfterbtn);
         }
 
+        public string get_name_from_form_send_res()
+        {
+            IWebElement res = get_form_send_result();
+            IWebElement resName = res.FindElement(By.Id("name"));
+            string name = resName.Text.Substring(5);
+            return name;
+        }
+
     }
 }

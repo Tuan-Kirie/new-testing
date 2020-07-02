@@ -10,16 +10,17 @@ namespace demoqa_com.pages
     public class ElementPageTest
     {
         private readonly string _browserName;
-        private IWebDriver driver = null;
-        private const string elements_page_url = "https://demoqa.com/elements";
-        private const string text_box_url = "https://demoqa.com/text-box";
-        private const string radio_btn_url = "https://demoqa.com/radio-button";
-        private const string web_tables_btn_url = "https://demoqa.com/webtables";
-        private const string buttons_btn_url = "https://demoqa.com/buttons";
-        private const string uplodown_btn_url = "https://demoqa.com/upload-download";
-        private const string links_btn_url = "https://demoqa.com/links";
-        private const string dynamicProp_btn_url = "https://demoqa.com/dynamic-properties";
-        private const string base_url = "https://demoqa.com/";
+        public IWebDriver driver = null;
+        private const string BaseUrl = "https://demoqa.com/";
+        private const string ElementsPageUrl = BaseUrl + "elements";
+        private const string TextBoxUrl = BaseUrl +  "text-box";
+        private const string RadioBtnUrl = BaseUrl + "radio-button";
+        private const string WebTablesBtnUrl = BaseUrl + "webtables";
+        private const string ButtonsBtnUrl = BaseUrl + "buttons";
+        private const string UplodownBtnUrl = BaseUrl + "upload-download";
+        private const string LinksBtnUrl = BaseUrl +  "links";
+        private const string DynamicPropBtnUrl = BaseUrl + "dynamic-properties";
+        
 
         public ElementPageTest(string browserName)
         {
@@ -37,10 +38,10 @@ namespace demoqa_com.pages
         [Test]
         public void test_guest_can_go_to_text_box_page()
         {
-            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            ElementsPage page = new ElementsPage(driver, ElementsPageUrl);
             page.open_page();
             page.open_test_box();
-            Assert.AreEqual("https://demoqa.com/text-box", this.driver.Url, "Not Right Url");
+            Assert.AreEqual(TextBoxUrl, this.driver.Url, "Not Right Url");
         }
 
         [Test, Combinatorial]
@@ -48,13 +49,11 @@ namespace demoqa_com.pages
             [Values("testuser", "Testuser", "@Testuser", "_Testuser")]
             string fullName)
         {
-            ElementsPage page = new ElementsPage(driver, text_box_url);
+            ElementsPage page = new ElementsPage(driver, TextBoxUrl);
             page.open_page();
             page.input_data_to_full_name(fullName);
             page.submit_form();
-            IWebElement res = page.get_form_send_result();
-            IWebElement resName = res.FindElement(By.Id("name"));
-            string name = resName.Text.Substring(5);
+            string name = page.get_name_from_form_send_res();
             Assert.AreEqual(fullName, name, "Input names are not equal");
         }
 
@@ -62,10 +61,10 @@ namespace demoqa_com.pages
         public void test_email_input_test_box_page(
             [Values("testuser@testmail.com", "testuser@testmailcom", "testuser.com")]
             string email,
-            [Values(true, false, false)] Boolean expectedResult
+            [Values(true, false, false)] bool expectedResult
         )
         {
-            ElementsPage page = new ElementsPage(driver, text_box_url);
+            ElementsPage page = new ElementsPage(driver, TextBoxUrl);
             page.open_page();
             page.input_data_to_email(email);
             page.submit_form();
@@ -76,7 +75,7 @@ namespace demoqa_com.pages
         [Test]
         public void test_guest_can_go_to_radio_btn_page()
         {
-            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            ElementsPage page = new ElementsPage(driver, ElementsPageUrl);
             page.open_page();
             page.open_radio_btn();
             Assert.AreEqual("https://demoqa.com/radio-button", this.driver.Url, "Not Right Url");
@@ -85,63 +84,63 @@ namespace demoqa_com.pages
         [Test, Sequential]
         public void test_guest_can_select_radio(
             [Values("Yes", "Impressive", "No")] string radioType,
-            [Values(true, true, false)] Boolean expectedResult
+            [Values(true, true, false)] bool expectedResult
         )
         {
-            ElementsPage page = new ElementsPage(driver, radio_btn_url);
+            ElementsPage page = new ElementsPage(driver, RadioBtnUrl);
             page.open_page();
             page.click_radio(radioType);
-            Boolean res = page.check_radio_select_res(radioType);
+            bool res = page.check_radio_select_res(radioType);
             Assert.AreEqual(expectedResult, res, "Error with radio btn selection");
         }
 
         [Test]
         public void test_guest_can_go_to_web_tables_page()
         {
-            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            ElementsPage page = new ElementsPage(driver, ElementsPageUrl);
             page.open_page();
             page.open_web_tables();
-            Assert.AreEqual(web_tables_btn_url, page.Driver.Url, "Not correct page");
+            Assert.AreEqual(WebTablesBtnUrl, page.Driver.Url, "Not correct page");
         }
 
         [TestCase(new object[] {new[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
         public void test_guest_can_add_new_row(string[] data)
         {
-            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            ElementsPage page = new ElementsPage(driver, WebTablesBtnUrl);
             page.open_page();
             page.add_new_table_row(data);
-            Boolean checkStatus = page.check_new_raw_exist(data);
-            Assert.AreEqual(true, checkStatus);
+            bool checkStatus = page.check_new_raw_exist(data);
+            Assert.True(true, "No correct form result");
 
         }
 
         [TestCase(new object[] {new[] {"FirstName", "LastName", "testmail@gmail.com", "11", "12222", "Legal"}})]
         public void test_guest_can_edit_existing_row(string[] data)
         {
-            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            ElementsPage page = new ElementsPage(driver, WebTablesBtnUrl);
             page.open_page();
             page.edit_existing_table(data);
-            Boolean checkStatus = page.check_new_raw_exist(data);
+            bool checkStatus = page.check_new_raw_exist(data);
             Assert.AreEqual(true, checkStatus);
         }
 
         [Test]
         public void test_guest_can_delete_row()
         {
-            ElementsPage page = new ElementsPage(driver, web_tables_btn_url);
+            ElementsPage page = new ElementsPage(driver, WebTablesBtnUrl);
             page.open_page();
             string[] data = page.delete_existing_row();
-            Boolean checkStatus = page.check_row_deleting(data);
-            Assert.AreEqual(true, checkStatus);
+            bool checkStatus = page.check_row_deleting(data);
+            Assert.True(checkStatus, "Error with deleting table row");
         }
 
         [Test]
         public void test_guest_can_go_to_buttons_page()
         {
-            ElementsPage page = new ElementsPage(driver, elements_page_url);
+            ElementsPage page = new ElementsPage(driver, ElementsPageUrl);
             page.open_page();
             page.go_to_buttons_page();
-            Assert.AreEqual("https://demoqa.com/buttons", this.driver.Url, "Not right Url");
+            Assert.AreEqual(ButtonsBtnUrl, this.driver.Url, "Not right Url");
         }
 
         [TestCase("double")]
@@ -149,7 +148,7 @@ namespace demoqa_com.pages
         [TestCase("left")]
         public void test_guest_can_click_to_btns(string clickType)
         {
-            ElementsPage page = new ElementsPage(driver, buttons_btn_url);
+            ElementsPage page = new ElementsPage(driver, ButtonsBtnUrl);
             page.open_page();
             switch (clickType)
             {
@@ -164,57 +163,57 @@ namespace demoqa_com.pages
                     break;
             }
 
-            Boolean clickRes = page.check_btn_click(clickType);
-            Assert.True(clickRes);
+            bool clickRes = page.check_btn_click(clickType);
+            Assert.True(clickRes, $"Error with clicking to button{clickType}");
         }
 
         [Test]
         [Ignore("No locating with XPATH")]
         public void test_guest_can_go_to_upload_download_page()
         {
-            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            ElementsPage page = new ElementsPage(this.driver, ElementsPageUrl);
             page.go_to_uplodown_page();
-            Assert.AreEqual(uplodown_btn_url, this.driver.Url);
+            Assert.AreEqual(UplodownBtnUrl, this.driver.Url, "Not right URL");
         }
 
         [Test]
         public void test_guest_can_upload_file()
         {
-            ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
+            ElementsPage page = new ElementsPage(this.driver, UplodownBtnUrl);
             page.open_page();
             page.upload_test_file("test_file.txt");
-            Boolean checkRes = page.check_file_upload("test_file.txt");
-            Assert.True(checkRes);
+            bool checkRes = page.check_file_upload("test_file.txt");
+            Assert.True(checkRes, "Error with file uploading");
         }
 
         [Test]
         public void test_guest_can_download_file()
         {
-            ElementsPage page = new ElementsPage(this.driver, uplodown_btn_url);
+            ElementsPage page = new ElementsPage(this.driver, UplodownBtnUrl);
             page.open_page();
             page.uplodown_download_file();
-            Boolean checkRes = page.check_file_download("sampleFile.jpeg");
-            Assert.True(checkRes);
+            bool checkRes = page.check_file_download("sampleFile.jpeg");
+            Assert.True(checkRes, "Error with file downloading");
         }
 
         [Test]
         [Ignore("Element not clickable with standard method, this test will be fallen down")]
         public void test_guest_can_go_links_page()
         {
-            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            ElementsPage page = new ElementsPage(this.driver, ElementsPageUrl);
             page.open_page();
             page.go_to_links_page();
-            Assert.AreEqual(links_btn_url, this.driver.Url);
+            Assert.AreEqual(LinksBtnUrl, this.driver.Url, "Not right Url");
         }
 
         [TestCase("common")]
         [TestCase("dynamic")]
         public void test_links_with_new_tab(string linkType)
         {
-            ElementsPage page = new ElementsPage(this.driver, links_btn_url);
+            ElementsPage page = new ElementsPage(this.driver, LinksBtnUrl);
             page.open_page();
             string openedLink = page.open_link_in_new_tab(linkType);
-            Assert.AreEqual(base_url, openedLink);
+            Assert.AreEqual(BaseUrl, openedLink, "Error with opening new tab with click to link");
         }
 
         [Test, Sequential]
@@ -222,31 +221,31 @@ namespace demoqa_com.pages
             [Values("created", "no-content", "moved", "bad-request", "unauthorized", "forbidden", "not-found")]
             string linkType)
         {
-            ElementsPage page = new ElementsPage(this.driver, links_btn_url);
+            ElementsPage page = new ElementsPage(this.driver, LinksBtnUrl);
             page.open_page();
             page.click_link_with_api_call(linkType);
             bool checkRes = page.check_click_res(linkType);
-            Assert.True(checkRes);
+            Assert.True(checkRes, "Error with sending api call with link");
         }
 
         [Test]
         [Ignore("Element not clickable with standard method, this test will be fallen down")]
         public void test_guest_can_go_to_dynamic_properties_page()
         {
-            ElementsPage page = new ElementsPage(this.driver, elements_page_url);
+            ElementsPage page = new ElementsPage(this.driver, ElementsPageUrl);
             page.open_page();
             page.go_to_dynamic_properties_page();
-            Assert.AreEqual(dynamicProp_btn_url, this.driver.Url);
+            Assert.AreEqual(DynamicPropBtnUrl, this.driver.Url, "Not right URL");
         }
         
         
         [Test]
         public void test_btn_are_visible()
         {
-            ElementsPage page = new ElementsPage(this.driver, dynamicProp_btn_url);
+            ElementsPage page = new ElementsPage(this.driver, DynamicPropBtnUrl);
             page.open_page();
             bool checkRes = page.check_dynamic_button_clickable();
-            Assert.True(checkRes);
+            Assert.True(checkRes, "Dynamic button not clickable");
         }
 
         [TearDown]
