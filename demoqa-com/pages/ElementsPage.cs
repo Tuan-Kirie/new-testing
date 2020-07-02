@@ -70,38 +70,38 @@ namespace demoqa_com.pages
 
         public ElementsPage(IWebDriver driver, string url, int timeout = 4) : base(driver, url, timeout)
         {
-            this.driver = driver;
+            this.Driver = driver;
             this.url = url;
             this.timeout = timeout;
         }
 
         public void open_test_box()
         {
-            IWebElement elem = this.driver.FindElement(By.XPath(TextBoxPageBtn));
+            IWebElement elem = this.Driver.FindElement(By.XPath(TextBoxPageBtn));
             elem.Click();
         }
         
         public void input_data_to_full_name(string data)
         {
-            IWebElement elem = this.driver.FindElement(By.CssSelector(TextBoxFullNameInp));
+            IWebElement elem = this.Driver.FindElement(By.CssSelector(TextBoxFullNameInp));
             elem.SendKeys(data);
         }
 
         public void submit_form()
         {
             scroll_window_to_elem(TextBoxSubmitBtn.Substring(1));
-            IWebElement submit = this.driver.FindElement(By.CssSelector(TextBoxSubmitBtn));
+            IWebElement submit = this.Driver.FindElement(By.CssSelector(TextBoxSubmitBtn));
             submit.Click();
         }
 
         public IWebElement get_form_send_result()
         {
-            return this.driver.FindElement(By.CssSelector(TextBoxResult));
+            return this.Driver.FindElement(By.CssSelector(TextBoxResult));
         }
 
         public void input_data_to_email(string data)
         {
-            IWebElement elem = this.driver.FindElement(By.CssSelector(TextBoxEmailInp));
+            IWebElement elem = this.Driver.FindElement(By.CssSelector(TextBoxEmailInp));
             elem.SendKeys(data);
         }
 
@@ -109,7 +109,7 @@ namespace demoqa_com.pages
         {
             if (check_element_on_DOM(TextBoxResultEmail) != null)
             {
-                IWebElement resEmail = this.driver.FindElement(By.CssSelector(TextBoxResultEmail));
+                IWebElement resEmail = this.Driver.FindElement(By.CssSelector(TextBoxResultEmail));
                 string result = resEmail.Text.Substring(6);
                 return email == result;
             }
@@ -121,7 +121,7 @@ namespace demoqa_com.pages
 
         public void open_radio_btn()
         {
-            IWebElement elem = this.driver.FindElement(By.XPath(RadioBtnPageBtn));
+            IWebElement elem = this.Driver.FindElement(By.XPath(RadioBtnPageBtn));
             elem.Click();
         }
 
@@ -144,7 +144,7 @@ namespace demoqa_com.pages
         {
             try
             {
-                IWebElement elem = this.driver.FindElement(By.CssSelector(RadioBtnOutput));
+                IWebElement elem = this.Driver.FindElement(By.CssSelector(RadioBtnOutput));
                 return selectedRadio == elem.Text;
             }
             catch (NoSuchElementException)
@@ -169,29 +169,29 @@ namespace demoqa_com.pages
 
         public void open_web_tables()
         {
-            IWebElement elem = this.driver.FindElement(By.XPath(WebTablesPageBtn));
+            IWebElement elem = this.Driver.FindElement(By.XPath(WebTablesPageBtn));
             elem.Click();
         }
 
         public void add_new_table_row(string[] data)
         {
-            IWebElement addBtn = this.driver.FindElement(By.CssSelector(WebTablesAddNewBtn));
+            IWebElement addBtn = this.Driver.FindElement(By.CssSelector(WebTablesAddNewBtn));
             addBtn.Click();
-            List<IWebElement> formInputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(WebTablesUserFormInputs)));
+            List<IWebElement> formInputs = new List<IWebElement>(this.Driver.FindElements(By.CssSelector(WebTablesUserFormInputs)));
             for (int i = 0; i < formInputs.Count; i++)
             {
                 formInputs[i].SendKeys(data[i]);
             }
 
-            IWebElement sbmBtn = this.driver.FindElement(By.CssSelector(WebTablesFormSendBtn));
+            IWebElement sbmBtn = this.Driver.FindElement(By.CssSelector(WebTablesFormSendBtn));
             sbmBtn.Click();
         }
 
         public void edit_existing_table(string[] data)
         {
-            IWebElement editBtn = this.driver.FindElement(By.CssSelector(WebTablesEditBtn));
+            IWebElement editBtn = this.Driver.FindElement(By.CssSelector(WebTablesEditBtn));
             editBtn.Click();
-            List<IWebElement> formInputs = new List<IWebElement>(this.driver.FindElements(By.CssSelector(WebTablesUserFormInputs)));
+            List<IWebElement> formInputs = new List<IWebElement>(this.Driver.FindElements(By.CssSelector(WebTablesUserFormInputs)));
             for (int i = 0; i < formInputs.Count; i++)
             {
                 formInputs[i].SendKeys(Keys.Control + "a");
@@ -199,7 +199,7 @@ namespace demoqa_com.pages
                 formInputs[i].SendKeys(data[i]);
             }
 
-            IWebElement sbmBtn = this.driver.FindElement(By.CssSelector(WebTablesFormSendBtn));
+            IWebElement sbmBtn = this.Driver.FindElement(By.CssSelector(WebTablesFormSendBtn));
             sbmBtn.Click();
         }
         
@@ -222,7 +222,7 @@ namespace demoqa_com.pages
 
         public string[] delete_existing_row()
         {
-            IWebElement existingRow = this.driver.FindElement(By.CssSelector(WebTablesRow));
+            IWebElement existingRow = this.Driver.FindElement(By.CssSelector(WebTablesRow));
             List<IWebElement> rowElemsB = new List<IWebElement>(existingRow.FindElements(By.CssSelector("div")));
             rowElemsB.RemoveAt(rowElemsB.Count - 1);
             string[] rowContent = new string[rowElemsB.Count];
@@ -230,7 +230,7 @@ namespace demoqa_com.pages
             {
                 rowContent[i] = rowElemsB[i].Text;
             }
-            IWebElement deleteBtn = this.driver.FindElement(By.CssSelector(WebTablesRemoveBtn));
+            IWebElement deleteBtn = this.Driver.FindElement(By.CssSelector(WebTablesRemoveBtn));
             deleteBtn.Click();
             return rowContent;
         }
@@ -254,27 +254,27 @@ namespace demoqa_com.pages
 
         public void go_to_buttons_page()
         {
-            IWebElement elem = this.driver.FindElement(By.XPath(ButtonsPageBtn));
+            IWebElement elem = this.Driver.FindElement(By.XPath(ButtonsPageBtn));
             elem.Click();
         }
 
         public void click_to_double_click_btn()
         {
-            Actions action = new Actions(this.driver);
-            IWebElement btn = this.driver.FindElement(By.CssSelector(BtnDoubleClickBtn));
+            Actions action = new Actions(this.Driver);
+            IWebElement btn = this.Driver.FindElement(By.CssSelector(BtnDoubleClickBtn));
             action.DoubleClick(btn).Perform();
         }
 
         public void click_to_right_click_btn()
         {    
-            Actions action = new Actions(this.driver);
-            IWebElement btn = this.driver.FindElement(By.CssSelector(BtnRightClickBtn));
+            Actions action = new Actions(this.Driver);
+            IWebElement btn = this.Driver.FindElement(By.CssSelector(BtnRightClickBtn));
             action.ContextClick(btn).Perform();
         }
 
         public void click_to_common_click_btn()
         {
-            IWebElement btn = this.driver.FindElement(By.XPath(BtnLeftClickBtn));
+            IWebElement btn = this.Driver.FindElement(By.XPath(BtnLeftClickBtn));
             btn.Click();
         }
 
@@ -285,13 +285,13 @@ namespace demoqa_com.pages
                 switch (btnType)
                 {
                     case "double":
-                        this.driver.FindElement(By.CssSelector("#doubleClickMessage"));
+                        this.Driver.FindElement(By.CssSelector("#doubleClickMessage"));
                         return true;
                     case "left":
-                        this.driver.FindElement(By.CssSelector("#dynamicClickMessage"));
+                        this.Driver.FindElement(By.CssSelector("#dynamicClickMessage"));
                         return true;
                     case "right":
-                        this.driver.FindElement(By.CssSelector("#rightClickMessage"));
+                        this.Driver.FindElement(By.CssSelector("#rightClickMessage"));
                         return true;
                 }
             }
@@ -305,13 +305,13 @@ namespace demoqa_com.pages
         
         public void go_to_uplodown_page()
         {
-            IWebElement elem  = this.driver.FindElement(By.XPath(UpldowPageBtn));
+            IWebElement elem  = this.Driver.FindElement(By.XPath(UpldowPageBtn));
             elem.Click();
         }
 
         public void upload_test_file(string fileName)
         {
-            IWebElement uploadInp = this.driver.FindElement(By.CssSelector(UplodownSelectBtn));
+            IWebElement uploadInp = this.Driver.FindElement(By.CssSelector(UplodownSelectBtn));
             string uploadFile = UploadFilesPath + fileName;
             uploadInp.SendKeys(uploadFile);
             
@@ -319,7 +319,7 @@ namespace demoqa_com.pages
 
         public Boolean check_file_upload(string fileName)
         {
-            IWebElement res = this.driver.FindElement(By.CssSelector(UplodownResult));
+            IWebElement res = this.Driver.FindElement(By.CssSelector(UplodownResult));
             string result = res.Text;
             if (result == "C:\\fakepath\\" + fileName)
             {
@@ -331,13 +331,13 @@ namespace demoqa_com.pages
 
         public void uplodown_download_file()
         {
-            IWebElement elem = this.driver.FindElement(By.CssSelector(UplodownDownloadBtn));
+            IWebElement elem = this.Driver.FindElement(By.CssSelector(UplodownDownloadBtn));
             elem.Click();
         }
         
         public void go_to_links_page()
         {
-            IWebElement elem  = this.driver.FindElement(By.XPath(LinksPageBtn));
+            IWebElement elem  = this.Driver.FindElement(By.XPath(LinksPageBtn));
             elem.Click();
         }
 
@@ -345,19 +345,19 @@ namespace demoqa_com.pages
         {
             if (linkType == "common")
             {
-                IWebElement elem = this.driver.FindElement(By.CssSelector(LinksCommonLink));
+                IWebElement elem = this.Driver.FindElement(By.CssSelector(LinksCommonLink));
                 elem.Click();
             }else if (linkType == "dynamic")
             {
-                IWebElement elem = this.driver.FindElement(By.CssSelector(LinksDynamicLink));
+                IWebElement elem = this.Driver.FindElement(By.CssSelector(LinksDynamicLink));
                 elem.Click();
             }
     
-            Collection<string> tabs = new Collection<string>(this.driver.WindowHandles);
-            this.driver.SwitchTo().Window(tabs[tabs.Count - 1]);
-            string openedLink = this.driver.Url;
-            this.driver.Close();
-            this.driver.SwitchTo().Window(tabs[0]);
+            Collection<string> tabs = new Collection<string>(this.Driver.WindowHandles);
+            this.Driver.SwitchTo().Window(tabs[tabs.Count - 1]);
+            string openedLink = this.Driver.Url;
+            this.Driver.Close();
+            this.Driver.SwitchTo().Window(tabs[0]);
             return openedLink;
         }
 
@@ -366,19 +366,19 @@ namespace demoqa_com.pages
             switch (linkType)
             {
                 case "created":
-                    IWebElement elem1 = this.driver.FindElement(By.CssSelector(CreatedLink));
+                    IWebElement elem1 = this.Driver.FindElement(By.CssSelector(CreatedLink));
                     elem1.Click();
                     break;
                 case "no-content":
-                    IWebElement elem2 = this.driver.FindElement(By.CssSelector(NoContentLink));
+                    IWebElement elem2 = this.Driver.FindElement(By.CssSelector(NoContentLink));
                     elem2.Click();
                     break;
                 case "moved":
-                    IWebElement elem3 = this.driver.FindElement(By.CssSelector(MovedLink));
+                    IWebElement elem3 = this.Driver.FindElement(By.CssSelector(MovedLink));
                     elem3.Click();
                     break;
                 case "bad-request":
-                    IWebElement elem4 = this.driver.FindElement(By.CssSelector(BadRequestLink));
+                    IWebElement elem4 = this.Driver.FindElement(By.CssSelector(BadRequestLink));
                     elem4.Click();
                     break;
                 //Click with JS cause cant click with selenium common method
@@ -397,7 +397,7 @@ namespace demoqa_com.pages
         public bool check_click_res(string linkType)
         {
             IWebElement clickRes = null;
-            WebDriverWait wait = new WebDriverWait(this.driver, new TimeSpan(0, 0, 3));
+            WebDriverWait wait = new WebDriverWait(this.Driver, new TimeSpan(0, 0, 3));
             try
             {
                 clickRes = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(LinkResponse)));
@@ -430,7 +430,7 @@ namespace demoqa_com.pages
 
         public void go_to_dynamic_properties_page()
         {
-            IWebElement elem = this.driver.FindElement(By.XPath(DynamicPageBtn));
+            IWebElement elem = this.Driver.FindElement(By.XPath(DynamicPageBtn));
             elem.Click();
         }
 

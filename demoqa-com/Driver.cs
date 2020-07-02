@@ -12,7 +12,7 @@ namespace demoqa_com.pages
     public class DriverInitializer
     {
         private static IWebDriver driver;
-        private static string ProjectPath
+        public static string ProjectPath
         {
             get
             {
@@ -22,7 +22,7 @@ namespace demoqa_com.pages
             }
         }
 
-        private static string DownloadPath
+        public static string DownloadPath
         {
             get => ProjectPath + "Download";
         }

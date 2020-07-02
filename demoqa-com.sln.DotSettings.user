@@ -1,6 +1,4 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=72880220_002D3dd3_002D44a9_002D8d2f_002D7ec9c72d5082/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="test_guest_can_download_file" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::6DB81E9F-3CF5-4F5D-A3FE-C4AEF15D1486::.NETFramework,Version=v3.5::demoqa_com.pages.ElementPageTest("Firefox").test_guest_can_download_file&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
