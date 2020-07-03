@@ -70,7 +70,6 @@ namespace demoqa_com.pages.api
         {
             IRestResponse response = api.send_get_request();
             JObject jsonJObject = api.ParseJsonContent(response);
-            Console.Out.WriteLine(jsonJObject);
             return jsonJObject;
         } 
     }

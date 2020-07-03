@@ -29,7 +29,7 @@ namespace demoqa_com.pages
         public void verify_response_body_correct()
         {
             JObject content = ApiBooks.DeserializeAllBooks();
-            Assert.IsTrue(content.ContainsKey("books"));
+            Assert.IsTrue(content.ContainsKey("books"), "json content does not contains books key");
         }
         
     }
