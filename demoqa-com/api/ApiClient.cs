@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using RestSharp;
 
 
@@ -25,8 +29,9 @@ namespace demoqa_com.pages.api
                 case "Book":
                     _client = new RestClient(bookEndPoint);
                     break;
+                default:
+                    throw new Exception("Provider class can not be initialized without accepted api endpoint");
             }
-            throw new Exception("Provider class can not be initialized without accepted api endpoint");
         }
 
         public IRestResponse send_get_request()
@@ -34,6 +39,19 @@ namespace demoqa_com.pages.api
             RestRequest request = new RestRequest(Method.GET);
             IRestResponse response = _client.Execute(request);
             return response;
+        }
+
+        public JObject ParseJsonContent(IRestResponse response)
+        {
+            try
+            {
+                return JObject.Parse(response.Content);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         
     }
@@ -47,5 +65,13 @@ namespace demoqa_com.pages.api
             IRestResponse response = api.send_get_request();
             return response;
         }
+
+        public static JObject DeserializeAllBooks()
+        {
+            IRestResponse response = api.send_get_request();
+            JObject jsonJObject = api.ParseJsonContent(response);
+            Console.Out.WriteLine(jsonJObject);
+            return jsonJObject;
+        } 
     }
 }

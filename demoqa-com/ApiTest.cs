@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using demoqa_com.pages.api;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using RestSharp;
 
@@ -20,10 +22,15 @@ namespace demoqa_com.pages
         public void verify_response_body_is_not_empty()
         {
             IRestResponse response = ApiBooks.GetAllBooks();
-            Console.Out.WriteLine(response.Content);
-            Assert.IsNotEmpty(response.Content, "Response are empty");
+            Assert.GreaterOrEqual(response.Content.Length, 1, "Response are empty");
         }
-        
+
+        [Test]
+        public void verify_response_body_correct()
+        {
+            JObject content = ApiBooks.DeserializeAllBooks();
+            Assert.IsTrue(content.ContainsKey("books"));
+        }
         
     }
 }
