@@ -66,8 +66,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ApiTest.cs" />
-        <Compile Include="api\ApiClient.cs" />
         <Compile Include="Driver.cs" />
         <Compile Include="ElementPageTest.cs" />
         <Compile Include="pages\BasePage.cs" />

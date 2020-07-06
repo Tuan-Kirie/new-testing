@@ -1,6 +1,13 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=860436cd_002Dd995_002D4550_002D9dbc_002D9484d341fff0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ApiTestBooksStoreBooks" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::6DB81E9F-3CF5-4F5D-A3FE-C4AEF15D1486::.NETFramework,Version=v4.8::demoqa_com.pages.ApiTestBooksStoreBooks&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=71ed6e49_002Daa0f_002D4b0b_002Dac79_002D3d25229ec99c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="test_user_registration" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::6DB81E9F-3CF5-4F5D-A3FE-C4AEF15D1486::.NETFramework,Version=v4.8::demoqa_com.pages.ApiTestBooksStoreBooks.test_user_registration&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Not&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;NUnit3x::6DB81E9F-3CF5-4F5D-A3FE-C4AEF15D1486::.NETFramework,Version=v4.8::[0-1001]demoqa_com.pages.ApiTestBooksStoreBooks.test_user_registration(["VeryTestUsername", "R&amp;amp;Uz.WZ~(:%2'*3X"])&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+    &lt;/Not&gt;&#xD;
+  &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
